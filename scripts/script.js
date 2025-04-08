@@ -8,6 +8,13 @@ const loadCategories = () => {
     .then((data) => displayCatagories(data.categories))
     .catch((error) => console.log(error));
 };
+// video load by category----------------
+const videoByCategory = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayVideos(data.category))
+    .catch((error) => console.log(error));
+};
 // video section--------------------
 const loadVideo = () => {
   fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
@@ -24,10 +31,12 @@ const loadVideo = () => {
 const displayCatagories = (categories) => {
   const categoryContainer = document.getElementById("category-container");
   categories.forEach((item) => {
-    const button = document.createElement("button");
-    button.classList = "btn";
-    button.innerText = item.category;
-    categoryContainer.append(button);
+    const buttonContainer = document.createElement("div");
+    buttonContainer.innerHTML = `<button id="btn-${item.category_id}" class="btn" onclick="videoByCategory(${item.category_id})">${item.category}</button>`;
+    // const button = document.createElement("button");
+    // button.classList = "btn";
+    // button.innerText = item.category;
+    categoryContainer.append(buttonContainer);
   });
 };
 // display the category button-------------------------------
@@ -35,10 +44,11 @@ const displayCatagories = (categories) => {
 // display the all the video-------------------------------
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("videos-container");
+  videoContainer.innerHTML = "";
   videos.forEach((video) => {
     const card = document.createElement("div");
     card.classList = "card card-compact";
-    card.innerHTML = `<figure class="h-[200px]">
+    card.innerHTML = `<figure class="h-[180px]">
     <img class="w-full h-full object-center object-cover"
       src="${video.thumbnail}" />
   </figure>
