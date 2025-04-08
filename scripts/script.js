@@ -39,12 +39,28 @@ const displayVideos = (videos) => {
     const card = document.createElement("div");
     card.classList = "card card-compact";
     card.innerHTML = `<figure class="h-[200px]">
-    <img class="w-full h-[200px] object-center object-cover"
+    <img class="w-full h-full object-center object-cover"
       src="${video.thumbnail}" />
   </figure>
-  <div class="px-0 py-5 flex">
-    <div><img class="w-10 h-10 rounded-full object-cover object-center" src="${video.authors[0].profile_picture}"/></div>
-    <div><h2 class="font-bold">${video.title}</h2></div>
+  <div class="px-0 py-5 flex gap-3">
+    <div><img class="w-10 h-10 rounded-full object-cover object-center" src="${
+      video.authors[0].profile_picture
+    }"/></div>
+    
+    <div><h2 class="font-bold">${video.title}</h2>
+   
+    <div class="flex gap-2"><p>${video.authors[0].profile_name}</p>
+    
+    ${
+      video.authors[0].verified === true
+        ? `<img class="w-6" src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png"/>`
+        : ""
+    }
+    </div>
+    
+    <h3>${video.others.views}</h3>
+    </div>
+    
   </div>`;
     videoContainer.append(card);
   });
