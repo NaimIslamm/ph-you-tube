@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PH-Tube</title>
+    <!-- CSS Sheets -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- CSS Sheets -->
+    <!-- DaisyUI CDN-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- DaisyUI CDN-->
+  </head>
+  <body>
+    <header>
+      <nav
+        class="main-nav w-11/12 mx-auto py-4 flex justify-between items-center border-b-1"
+      >
+        <div class="logo w-[100px]">
+          <img class="w-[100%]" src="assets/Logo.png" alt="" />
+        </div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search here" class="input" />
+        </div>
+        <div class="sort"><button class="btn">Sort</button></div>
+      </nav>
+    </header>
+    <div
+      id="category-container"
+      class="category-container w-11/12 mx-auto py-5 flex justify-center items-center gap-5"
+    ></div>
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
