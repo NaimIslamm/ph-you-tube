@@ -12,7 +12,12 @@ const loadCategories = () => {
 const videoByCategory = (id) => {
   fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     .then((res) => res.json())
-    .then((data) => displayVideos(data.category))
+    .then((data) => {
+      removeActiveClass();
+      const button = document.getElementById(`btn-${id}`);
+      button.classList.add("active");
+      displayVideos(data.category);
+    })
     .catch((error) => console.log(error));
 };
 // video section--------------------
@@ -25,14 +30,31 @@ const loadVideo = () => {
 // "category_id": "1001",
 //   "category": "Music"
 // fetch load & display it from API------------------------
+// get time----------------------------------
+const getTime = (time) => {
+  const hour = parseInt(time / 3600);
+  let remainingSecond = time % 3600;
+  let minute = parseInt(remainingSecond % 60);
+  remainingSecond = remainingSecond % 60;
+  return `${hour} hour ${minute}minute ${remainingSecond} second ago`;
+};
+// remove active class from button-----------------------------------
+const removeActiveClass = () => {
+  const buttons = document.getElementsByClassName("category-btn");
+  for (const button of buttons) {
+    button.classList.remove("active");
+  }
+};
+// remove active class from button-----------------------------------
 
-// display the category button-------------------------------
+// display the category button-------------------------------------
 
 const displayCatagories = (categories) => {
   const categoryContainer = document.getElementById("category-container");
   categories.forEach((item) => {
     const buttonContainer = document.createElement("div");
-    buttonContainer.innerHTML = `<button id="btn-${item.category_id}" class="btn" onclick="videoByCategory(${item.category_id})">${item.category}</button>`;
+    buttonContainer.innerHTML = `<button id="btn-${item.category_id}" class="btn category-btn" onclick="videoByCategory(${item.category_id})">${item.category}</button>`;
+
     // const button = document.createElement("button");
     // button.classList = "btn";
     // button.innerText = item.category;
@@ -59,9 +81,17 @@ const displayVideos = (videos) => {
   videos.forEach((video) => {
     const card = document.createElement("div");
     card.classList = "card card-compact";
-    card.innerHTML = `<figure class="h-[180px]">
+    card.innerHTML = `<figure class="h-[180px] relative">
     <img class="w-full h-full object-center object-cover"
-      src="${video.thumbnail}" />
+      src="${video.thumbnail}"/>
+      ${
+        video.others.posted_date?.length === 0
+          ? ""
+          : `<div class="absolute right-4 bottom-4 bg-black text-white text-xs p-1">
+            <p>${getTime(video.others.posted_date)}</p>
+          </div>`
+      }
+     
   </figure>
   <div class="px-0 py-5 flex gap-3">
     <div><img class="w-10 h-10 rounded-full object-cover object-center" src="${
