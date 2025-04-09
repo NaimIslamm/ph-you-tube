@@ -27,6 +27,15 @@ const loadVideo = () => {
     .then((data) => displayVideos(data.videos))
     .catch((error) => console.log(error));
 };
+// load video by search term-------------------------------
+const videoBySearch = (searchText) => {
+  fetch(
+    `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`
+  )
+    .then((res) => res.json())
+    .then((data) => displayVideos(data.videos))
+    .catch((error) => console.log(error));
+};
 
 // details section-----------------------------------------------
 const loadDetails = (id) => {
@@ -137,6 +146,12 @@ const displayVideos = (videos) => {
   });
 };
 // display the all the video-------------------------------
+// display the all the video by search-------------------------------
+
+document.getElementById("search-bar").addEventListener("keyup", (e) => {
+  videoBySearch(e.target.value);
+});
+// display the all the video by search-------------------------------
 
 loadVideo();
 loadCategories();
