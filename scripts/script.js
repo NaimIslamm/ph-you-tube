@@ -27,6 +27,14 @@ const loadVideo = () => {
     .then((data) => displayVideos(data.videos))
     .catch((error) => console.log(error));
 };
+
+// details section-----------------------------------------------
+const loadDetails = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/phero-tube/video/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayDetails(data.video))
+    .catch((error) => console.log(error));
+};
 // "category_id": "1001",
 //   "category": "Music"
 // fetch load & display it from API------------------------
@@ -46,6 +54,15 @@ const removeActiveClass = () => {
   }
 };
 // remove active class from button-----------------------------------
+// display the details--------------------
+const displayDetails = (details) => {
+  const detailsContainer = document.getElementById("modal-content");
+  detailsContainer.innerHTML = `
+  <img src="${details.thumbnail}"/>
+  <p>${details.description}</p>`;
+  document.getElementById("customModal").showModal();
+};
+// display the details--------------------
 
 // display the category button-------------------------------------
 
@@ -110,6 +127,9 @@ const displayVideos = (videos) => {
     </div>
     
     <h3>${video.others.views}</h3>
+    <button class="btn btn-sm btn-error" id="${
+      video.video_id
+    }" onclick="loadDetails('${video.video_id}')">Details</button>
     </div>
     
   </div>`;
